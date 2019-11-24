@@ -1,8 +1,7 @@
 package hr.persistence;
 
-import hr.personnel.Employee;
-import hr.personnel.FullTimeEmployee;
-import hr.personnel.PartTimeEmployee;
+import hr.logging.ConsoleLogger;
+import hr.personnel.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,32 +17,35 @@ we are storing employees in the file system.
  */
 
 public class EmployeeRepository {
+    private EmployeeFileSerializer serializer;
 
-	private EmployeeFileSerializer serializer;
+    public EmployeeRepository(EmployeeFileSerializer serializer) {
+        this.serializer = serializer;
+    }
 
-	public EmployeeRepository() {
-		this.serializer = serializer;
-	}
+    public List<Employee> findAll() {
 
-	public List<Employee> findAll() {
+        // Employees are kept in memory for simplicity
+        Employee anna = new FullTimeEmployee("Anna Smith", 2000);
+        Employee billy = new FullTimeEmployee("Billy Leech", 920);
 
-		// Employees are kept in memory for simplicity
-		Employee anna = new FullTimeEmployee("Anna Smith", 2000);
-		Employee billy = new FullTimeEmployee("Billy Leech", 920);
+        Employee steve = new PartTimeEmployee("Steve Jones", 800);
+        Employee magda = new PartTimeEmployee("Magda Iovan", 920);
 
-		Employee steve = new PartTimeEmployee("Steve Jones", 800);
-		Employee magda = new PartTimeEmployee("Magda Iovan", 920);
+        Employee john = new Intern("John Lee", 300, 10);
+        Employee catherine = new Intern("Catherine Allison", 500, 15);
 
-		return Arrays.asList(anna, billy, steve, magda);
-	}
+        // Subcontractors
+        Employee subcontractor = new Subcontractor("Rebekah Jackson", 3000);
 
-	public void save(Employee employee) throws IOException {
+        return Arrays.asList(anna, billy, steve, magda, john, subcontractor, catherine);
+    }
 
-		String sealizedString = this.serializer.serialize(employee);
+    public void save(Employee employee) throws IOException {
+        String serializedString = this.serializer.serialize(employee);
 
-		Path path = Paths.get(employee.getFullName().replace(" ", "_") + ".rec");
-		Files.write(path, sealizedString.toString().getBytes());
-
-	}
-
+        Path path = Paths.get(employee.getFullName()
+                .replace(" ", "_") + ".rec");
+        Files.write(path, serializedString.getBytes());
+    }
 }

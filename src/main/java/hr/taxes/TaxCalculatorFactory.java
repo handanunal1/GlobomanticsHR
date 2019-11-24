@@ -6,17 +6,19 @@ import hr.personnel.Intern;
 import hr.personnel.PartTimeEmployee;
 
 public class TaxCalculatorFactory {
-	public static TaxCalculator create(Employee employee) throws Exception {
+    public static TaxCalculator create(Employee employee) {
+        if (employee instanceof FullTimeEmployee) {
+            return new FullTimeTaxCalculator();
+        }
 
-		if (employee instanceof FullTimeEmployee) {
-			return new FullTimeTaxCalculator();
-		} else if (employee instanceof PartTimeEmployee) {
-			return new PartTimeTaxCalculator();
-		} else if (employee instanceof Intern) {
-			return new InternTaxCalculator();
-		}
+        if (employee instanceof PartTimeEmployee) {
+            return new PartTimeTaxCalculator();
+        }
 
-		throw new Exception("Invalid employee type");
-	}
+        if (employee instanceof Intern) {
+            return new InternTaxCalculator();
+        }
 
+        throw new RuntimeException("Invalid employee type");
+    }
 }

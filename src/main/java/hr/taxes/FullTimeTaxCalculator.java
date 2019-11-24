@@ -1,21 +1,17 @@
 package hr.taxes;
 
 import hr.personnel.Employee;
-import hr.personnel.FullTimeEmployee;
-import hr.personnel.Intern;
-import hr.personnel.PartTimeEmployee;
 
 public class FullTimeTaxCalculator implements TaxCalculator {
+    private final int RETIREMENT_TAX_PERCENTAGE = 10;
+    private final int INCOME_TAX_PERCENTAGE = 16;
+    private final int BASE_HEALTH_INSURANCE = 100;
 
-	private final int BASE_HEALTH_UNSURANCE = 100;
-	private final int RETIREMENT_TAX_PERCENTAGE = 10;
-	private final int INCOME_TAX_PERCENTAGE = 16;
 
-	public double calculate(Employee employee) {
-		int monthlyIncome = employee.getMonthlyIncome();
+    public double calculate(Employee employee) {
+        return BASE_HEALTH_INSURANCE +
+                (employee.getMonthlyIncome() * RETIREMENT_TAX_PERCENTAGE) / 100 +
+                (employee.getMonthlyIncome() * INCOME_TAX_PERCENTAGE) / 100;
 
-		return BASE_HEALTH_UNSURANCE + (monthlyIncome * RETIREMENT_TAX_PERCENTAGE) / 100
-				+ (monthlyIncome * INCOME_TAX_PERCENTAGE) / 100;
-
-	}
+    }
 }
