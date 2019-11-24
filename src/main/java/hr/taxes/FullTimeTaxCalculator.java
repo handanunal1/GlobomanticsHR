@@ -5,7 +5,7 @@ import hr.personnel.FullTimeEmployee;
 import hr.personnel.Intern;
 import hr.personnel.PartTimeEmployee;
 
-public class FullTimeTaxTaxCalculator implements TaxCalculator {
+public class FullTimeTaxCalculator implements TaxCalculator {
 
 	private final int BASE_HEALTH_UNSURANCE = 100;
 	private final int RETIREMENT_TAX_PERCENTAGE = 10;
