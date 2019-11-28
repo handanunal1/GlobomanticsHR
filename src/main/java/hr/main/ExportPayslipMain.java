@@ -22,7 +22,7 @@ public class ExportPayslipMain {
         for (Employee employee : employees){
             Payslip payslip = new Payslip(employee , Month.AUGUST);
 
-            String exportableText = payslip.toTxt().toUpperCase();
+            String exportableText = payslip.toTxt();
             System.out.println(exportableText);
         }
     }
